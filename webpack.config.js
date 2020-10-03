@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require('copy-webpack-plugin');
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const path = require("path");
 
 module.exports = {
@@ -33,12 +34,14 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: `styles/styles.css`
-   }),
-  new CopyPlugin({
-    patterns: [
-      { from: './src/assets/favicon', to: 'assets/favicon' },
-      { from: './src/assets/fonts', to: 'assets/fonts' },
-    ]
-  }),
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: './src/assets/favicon', to: 'assets/favicon' },
+        { from: './src/assets/fonts', to: 'assets/fonts' },
+        { from: './src/assets/img', to: 'assets/img'}
+      ]
+    }),
+    new ImageminPlugin({ test: /\.(jpe?g|png|gif|svg)$/i })
   ],
 };
