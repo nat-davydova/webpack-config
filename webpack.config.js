@@ -42,6 +42,8 @@ module.exports = {
         { from: './src/assets/img', to: 'assets/img'}
       ]
     }),
-    new ImageminPlugin({ test: /\.(jpe?g|png|gif|svg)$/i })
+    new ImageminPlugin({
+      disable: process.env.NODE_ENV !== 'production', // Disable during development
+      test: /\.(jpe?g|png|gif|svg)$/i })
   ],
 };
