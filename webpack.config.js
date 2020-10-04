@@ -4,6 +4,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const fs = require("fs");
 const path = require("path");
 
@@ -93,13 +94,14 @@ module.exports = {
     ]
   },
   plugins: [
+    new CleanWebpackPlugin(),
     ...PAGES.map(page => new HtmlWebpackPlugin({
       template: `${PAGES_PUG}/${page}`,
       filename: `./${page.replace(/\.pug/, '.html')}`
     })),
     new MiniCssExtractPlugin({
       template: `${PATHS.src}/styles/styles.scss`,
-      filename: `styles/styles.min.css`
+      filename: `styles/styles.[hash].min.css`
     }),
     new CopyPlugin({
       patterns: [
