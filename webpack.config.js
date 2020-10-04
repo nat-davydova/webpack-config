@@ -26,6 +26,7 @@ module.exports = {
   optimization: {
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -45,6 +46,7 @@ module.exports = {
           },
           {
             loader: "postcss-loader",
+            options: {sourceMap: true}
           },
         ]
       },
@@ -60,6 +62,7 @@ module.exports = {
           },
           {
             loader: "postcss-loader",
+            options: {sourceMap: true}
           },
           {
             loader: "sass-loader",
