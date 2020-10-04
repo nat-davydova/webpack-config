@@ -17,16 +17,19 @@ const PAGES = fs.readdirSync(PAGES_PUG).filter(filename => filename.endsWith('.p
 
 module.exports = {
   entry:  {
-    app: [`${PATHS.src}/app.js`, `${PATHS.src}/scss/styles.scss`]
+    app: [`${PATHS.src}/scripts/app.js`, `${PATHS.src}/scss/styles.scss`]
   },
   output:{
     path: `${PATHS.dist}`,
-    filename: '[name].js'
+    filename: './scripts/[name].min.js'
   },
   optimization: {
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
   },
   devtool: 'source-map',
+  devServer: {
+    overlay: true
+  },
   module: {
     rules: [
       {
@@ -48,7 +51,8 @@ module.exports = {
             loader: "postcss-loader",
             options: {sourceMap: true}
           },
-        ]
+        ],
+        exclude: '/node_modules'
       },
       {
         test: /\.scss$/,
@@ -68,7 +72,13 @@ module.exports = {
             loader: "sass-loader",
             options: {sourceMap: true}
           },
-        ]
+        ],
+        exclude: '/node_modules'
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: '/node_modules'
       }
     ]
   },
