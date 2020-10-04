@@ -21,10 +21,20 @@ module.exports = {
   },
   output:{
     path: `${PATHS.dist}`,
-    filename: './scripts/[name].min.js'
+    filename: './scripts/[name].[hash].min.js'
   },
   optimization: {
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          name: 'vendor',
+          test: /node_modules/,
+          chunks: "all",
+          enforce: true
+        }
+      }
+    }
   },
   devtool: 'source-map',
   devServer: {
