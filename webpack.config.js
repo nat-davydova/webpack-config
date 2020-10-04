@@ -4,17 +4,26 @@ const CopyPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const fs = require("fs");
 const path = require("path");
+
+const PATHS = {
+  src: path.join(__dirname, './src'),
+  dist: path.join(__dirname, './dist')
+}
+
+const PAGES_PUG = `${PATHS.src}/pug/`
+const PAGES = fs.readdirSync(PAGES_PUG).filter(filename => filename.endsWith('.pug'))
 
 module.exports = {
   entry:  {
     app: [
-      './src/app.js',
-      './src/css/styles.css'
+      `${PATHS.src}/app.js`,
+      `${PATHS.src}/css/styles.css`
     ]
   },
   output:{
-    path: path.resolve(__dirname, './dist'),
+    path: `${PATHS.dist}`,
     filename: '[name].js'
   },
   optimization: {
@@ -23,22 +32,31 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.pug$/,
+        loader: 'pug-loader',
+        exclude: '/node_modules'
+      },
+      {
         test: /\.css$/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-         },
-          "css-loader"
+          },
+          {
+            loader: "css-loader",
+            options: {sourceMap: true}
+          },
         ]
       }
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "src", "index.html")
-    }),
+    ...PAGES.map(page => new HtmlWebpackPlugin({
+      template: `${PAGES_PUG}/${page}`,
+      filename: `./${page.replace(/\.pug/, '.html')}`
+    })),
     new MiniCssExtractPlugin({
-      filename: `styles/styles.css`
+      filename: `styles/styles.min.css`
     }),
     new CopyPlugin({
       patterns: [

@@ -1,0 +1,20 @@
+html(lang="en")
+    head
+        include includes/setup/head
+        link(rel="shortcut icon" href="assets/favicon/favicon.ico" type="image/x-icon")
+        link(rel="stylesheet" href="styles/styles.min.css")
+
+    body
+
+        include includes/sample-include
+
+        img(src='./assets/img/gulp-logo.png')
+
+        .icons
+
+            .icon
+                svg
+                    use(xlink:href="./assets/sprites/sprites-colored/svg/sprite.symbol.svg#shell")
+            .icon
+                svg
+                    use(xlink:href="./assets/sprites/sprites-solid/svg/sprite.symbol.svg#shell")
