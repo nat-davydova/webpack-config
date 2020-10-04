@@ -17,10 +17,7 @@ const PAGES = fs.readdirSync(PAGES_PUG).filter(filename => filename.endsWith('.p
 
 module.exports = {
   entry:  {
-    app: [
-      `${PATHS.src}/app.js`,
-      `${PATHS.src}/css/styles.css`
-    ]
+    app: [`${PATHS.src}/app.js`, `${PATHS.src}/scss/styles.scss`]
   },
   output:{
     path: `${PATHS.dist}`,
@@ -46,6 +43,28 @@ module.exports = {
             loader: "css-loader",
             options: {sourceMap: true}
           },
+          {
+            loader: "postcss-loader",
+          },
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          {
+            loader: "css-loader",
+            options: {sourceMap: true}
+          },
+          {
+            loader: "postcss-loader",
+          },
+          {
+            loader: "sass-loader",
+            options: {sourceMap: true}
+          },
         ]
       }
     ]
@@ -56,6 +75,7 @@ module.exports = {
       filename: `./${page.replace(/\.pug/, '.html')}`
     })),
     new MiniCssExtractPlugin({
+      template: `${PATHS.src}/styles/styles.scss`,
       filename: `styles/styles.min.css`
     }),
     new CopyPlugin({
