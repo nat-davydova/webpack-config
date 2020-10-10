@@ -5,6 +5,7 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin')
 const fs = require("fs");
 const path = require("path");
 
@@ -117,6 +118,30 @@ module.exports = {
     }),
     new ImageminPlugin({
       disable: process.env.NODE_ENV !== 'production', // Disable during development
-      test: /\.(jpe?g|png|gif|svg)$/i })
+      test: /\.(jpe?g|png|gif|svg)$/i }),
+    new SVGSpritemapPlugin('./src/assets/icons/icons-colored/**/*.svg', {
+      output: {
+        filename: 'assets/sprites/sprites-colored/sprites.svg',
+        svg4everybody: true,
+        svgo: {
+          plugins: [
+            { inlineStyles: { onlyMatchedOnce: false } },
+            { minifyStyles: true }
+          ]
+        }
+      },
+      sprite: {
+        prefix: false
+      }
+    }),
+    new SVGSpritemapPlugin('./src/assets/icons/icons-solid/**/*.svg', {
+      output: {
+        filename: 'assets/sprites/sprites-solid/sprites.svg',
+        svg4everybody: true,
+      },
+      sprite: {
+        prefix: false
+      }
+    })
   ],
 };
