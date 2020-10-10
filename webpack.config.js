@@ -138,6 +138,11 @@ module.exports = {
       output: {
         filename: 'assets/sprites/sprites-solid/sprites.svg',
         svg4everybody: true,
+        svgo: {
+          plugins: [
+            {removeAttrs: {attrs: '(stroke|fill|style)'}}
+          ]
+        }
       },
       sprite: {
         prefix: false
