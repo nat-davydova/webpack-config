@@ -62,7 +62,7 @@ module.exports = {
           {
             loader: "postcss-loader",
             options: {sourceMap: true}
-          },
+          }
         ],
         exclude: '/node_modules'
       },
@@ -81,6 +81,9 @@ module.exports = {
             options: {sourceMap: true}
           },
           {
+            loader: "resolve-url-loader"
+          },
+          {
             loader: "sass-loader",
             options: {sourceMap: true}
           },
@@ -96,6 +99,10 @@ module.exports = {
         test: /\.ts$/,
         loader: ['babel-loader', 'ts-loader'],
         exclude: '/node_modules'
+      },
+      {
+        test: /.(jpg|jpeg|png|svg)$/,
+        use: ['url-loader']
       }
     ]
   },
@@ -112,7 +119,6 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: './src/assets/favicon', to: 'assets/favicon' },
-        { from: './src/assets/fonts', to: 'assets/fonts' },
         { from: './src/assets/img', to: 'assets/img'}
       ]
     }),
