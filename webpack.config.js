@@ -118,8 +118,8 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: './src/assets/favicon', to: 'assets/favicon' },
-        { from: './src/assets/img', to: 'assets/img'}
+        { from: './src/assets/favicon', to: 'assets/favicon', noErrorOnMissing: true },
+        { from: './src/assets/img', to: 'assets/img', noErrorOnMissing: true}
       ]
     }),
     new ImageminPlugin({
