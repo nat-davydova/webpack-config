@@ -143,7 +143,9 @@ module.exports = {
     new SVGSpritemapPlugin('./src/assets/icons/icons-solid/**/*.svg', {
       output: {
         filename: 'assets/sprites/sprites-solid/sprites.svg',
-        svg4everybody: true,
+        svg4everybody: {
+          polyfill: true
+        },
         svgo: {
           plugins: [
             {removeAttrs: {attrs: '(stroke|fill|style)'}}
