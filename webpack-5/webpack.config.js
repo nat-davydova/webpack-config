@@ -1,4 +1,5 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const path = require("path");
 const fs = require("fs");
@@ -21,10 +22,18 @@ module.exports = {
   },
   module: {
     rules: [
-
+      {
+        test: /\.pug$/,
+        loader: 'pug-loader',
+        exclude: '/node_modules'
+      },
     ]
   },
   plugins: [
     new CleanWebpackPlugin(),
+    ...PAGES_TO_CONVERT.map(page => new HtmlWebpackPlugin({
+      template: `${PAGES_PUG}/${page}`,
+      filename: `./${page.replace(/\.pug/, '.html')}`
+    })),
   ]
 }
