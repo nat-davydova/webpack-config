@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --mode development",
-    "start": "webpack serve --mode development --open"
+    "start": "webpack serve --mode development --env development"
   },
   "author": "Natali Davydova",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "html-webpack-plugin": "^4.5.1",
     "pug-loader": "^2.4.0",
     "webpack": "^5.11.1",
-    "webpack-cli": "^4.3.1"
+    "webpack-cli": "^4.3.1",
+    "webpack-dev-server": "^3.11.1"
   }
 }

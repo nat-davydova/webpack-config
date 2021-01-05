@@ -20,6 +20,15 @@ module.exports = {
     path: `${PATHS.dist}`,
     filename: './scripts/[name].[fullhash].min.js'
   },
+  target: 'web',
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    publicPath: '/',
+    open: true,
+    watchContentBase: true,
+    port: 8080,
+    overlay: true
+  },
   module: {
     rules: [
       {
