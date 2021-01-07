@@ -11,8 +11,7 @@ const fs = require("fs");
 const PATHS = {
   src: path.join(__dirname, './src'),
   dist: path.join(__dirname, './dist'),
-  icons: path.join(__dirname, './src/assets/icons'),
-  sprites: path.join(__dirname, './dist/assets/sprites')
+  icons: path.join(__dirname, './src/assets/icons')
 }
 
 const PAGES_PUG = `${PATHS.src}/pug/`
@@ -95,11 +94,9 @@ module.exports = {
         { from: './src/assets/fonts', to: 'assets/fonts', noErrorOnMissing: true},
       ]
     }),
-    new ImageminPlugin({
-      test: /\.(jpe?g|png|gif|svg)$/i }),
-    new SVGSpritemapPlugin(`${PATHS.icons}/icons-colored/**/*.svg`, {
+    new SVGSpritemapPlugin('./src/assets/icons/icons-colored/**/*.svg', {
       output: {
-        filename: `assets/sprites/sprites-colored/sprites.svg`,
+        filename: 'assets/sprites/sprites-colored/sprites.svg',
         svg4everybody: true,
         svgo: {
           plugins: [
@@ -112,7 +109,7 @@ module.exports = {
         prefix: false
       }
     }),
-    new SVGSpritemapPlugin(`${PATHS.icons}/icons-solid/**/*.svg`, {
+    new SVGSpritemapPlugin(`./src/assets/icons/icons-solid/**/*.svg`, {
       output: {
         filename: 'assets/sprites/sprites-solid/sprites.svg',
         svg4everybody: {
@@ -127,6 +124,8 @@ module.exports = {
       sprite: {
         prefix: false
       }
-    })
+    }),
+    new ImageminPlugin({
+      test: /\.(jpe?g|png|gif)$/i }),
   ]
 }
