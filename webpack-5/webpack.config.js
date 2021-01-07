@@ -70,9 +70,11 @@ module.exports = {
       template: `${PAGES_PUG}/${page}`,
       filename: `./${page.replace(/\.pug/, '.html')}`
     })),
-    new MiniCssExtractPlugin({
-      template: `${PATHS.src}/styles/styles.scss`,
-      filename: `styles/styles.[hash].min.css`
-    }),
+    new MiniCssExtractPlugin(
+    //   {
+    //   template: `${PATHS.src}/styles/styles.scss`,
+    //   filename: `styles/styles.[hash].min.css`
+    // }
+    ),
   ]
 }
