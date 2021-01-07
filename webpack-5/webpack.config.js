@@ -1,5 +1,6 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const path = require("path");
 const fs = require("fs");
@@ -14,7 +15,7 @@ const PAGES_TO_CONVERT = fs.readdirSync(PAGES_PUG).filter(filename => filename.e
 
 module.exports = {
   entry:  {
-    app: `${PATHS.src}/scripts/app.js`
+    app: [`${PATHS.src}/scripts/app.js`, `${PATHS.src}/scss/styles.scss`]
   },
   output:{
     path: `${PATHS.dist}`,
@@ -29,6 +30,7 @@ module.exports = {
     port: 8080,
     overlay: true
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -36,6 +38,30 @@ module.exports = {
         loader: 'pug-loader',
         exclude: '/node_modules'
       },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          {
+            loader: "css-loader",
+            options: {sourceMap: true}
+          },
+          {
+            loader: "postcss-loader",
+            options: {sourceMap: true}
+          },
+          {
+            loader: "resolve-url-loader"
+          },
+          {
+            loader: "sass-loader",
+            options: {sourceMap: true}
+          },
+        ],
+        exclude: '/node_modules'
+      }
     ]
   },
   plugins: [
@@ -44,5 +70,9 @@ module.exports = {
       template: `${PAGES_PUG}/${page}`,
       filename: `./${page.replace(/\.pug/, '.html')}`
     })),
+    new MiniCssExtractPlugin({
+      template: `${PATHS.src}/styles/styles.scss`,
+      filename: `styles/styles.[hash].min.css`
+    }),
   ]
 }
