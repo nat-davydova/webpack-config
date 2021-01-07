@@ -1,6 +1,7 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 
 const path = require("path");
 const fs = require("fs");
@@ -61,6 +62,10 @@ module.exports = {
           },
         ],
         exclude: '/node_modules'
+      },
+      {
+        test: /.(jpg|jpeg|png|svg)$/,
+        type: 'asset/inline'
       }
     ]
   },
@@ -75,5 +80,12 @@ module.exports = {
         filename: `styles/styles.[hash].min.css`
       }
     ),
+    new CopyPlugin({
+      patterns: [
+        { from: './src/assets/favicon', to: 'assets/favicon', noErrorOnMissing: true },
+        { from: './src/assets/img', to: 'assets/img', noErrorOnMissing: true},
+        { from: './src/assets/fonts', to: 'assets/fonts', noErrorOnMissing: true},
+      ]
+    }),
   ]
 }
