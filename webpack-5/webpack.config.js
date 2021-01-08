@@ -1,107 +1,118 @@
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CopyPlugin = require('copy-webpack-plugin');
-const ImageminPlugin = require('imagemin-webpack-plugin').default;
-const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin')
+const CopyPlugin = require("copy-webpack-plugin");
+const ImageminPlugin = require("imagemin-webpack-plugin").default;
+const SVGSpritemapPlugin = require("svg-spritemap-webpack-plugin");
 
 const path = require("path");
 const fs = require("fs");
 
 const PATHS = {
-  src: path.join(__dirname, './src'),
-  dist: path.join(__dirname, './dist'),
-  icons: path.join(__dirname, './src/assets/icons')
-}
+  src: path.join(__dirname, "./src"),
+  dist: path.join(__dirname, "./dist"),
+  icons: path.join(__dirname, "./src/assets/icons")
+};
 
-const PAGES_PUG = `${PATHS.src}/pug/`
-const PAGES_TO_CONVERT = fs.readdirSync(PAGES_PUG).filter(filename => filename.endsWith('.pug'))
+const PAGES_PUG = `${PATHS.src}/pug/`;
+const PAGES_TO_CONVERT = fs
+  .readdirSync(PAGES_PUG)
+  .filter(filename => filename.endsWith(".pug"));
 
 module.exports = {
-  entry:  {
+  entry: {
     app: [`${PATHS.src}/scripts/app.js`, `${PATHS.src}/scss/styles.scss`]
   },
-  output:{
+  output: {
     path: `${PATHS.dist}`,
-    filename: './scripts/[name].[fullhash].min.js'
+    filename: "./scripts/[name].[fullhash].min.js"
   },
-  target: 'web',
+  target: "web",
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    publicPath: '/',
+    contentBase: path.join(__dirname, "dist"),
+    publicPath: "/",
     open: true,
     watchContentBase: true,
     port: 8080,
     overlay: true
   },
-  devtool: 'source-map',
+  devtool: "source-map",
   module: {
     rules: [
       {
         test: /\.pug$/,
-        loader: 'pug-loader',
-        exclude: '/node_modules'
+        loader: "pug-loader",
+        exclude: "/node_modules"
       },
       {
         test: /\.(scss|css)$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: MiniCssExtractPlugin.loader
           },
           {
             loader: "css-loader",
-            options: {sourceMap: true}
+            options: { sourceMap: true }
           },
           {
             loader: "postcss-loader",
-            options: {sourceMap: true}
+            options: { sourceMap: true }
           },
           {
             loader: "resolve-url-loader"
           },
           {
             loader: "sass-loader",
-            options: {sourceMap: true}
-          },
+            options: { sourceMap: true }
+          }
         ],
-        exclude: '/node_modules'
+        exclude: "/node_modules"
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: '/node_modules'
+        loader: "babel-loader",
+        exclude: "/node_modules"
       },
       {
         test: /.(jpg|jpeg|png|svg)$/,
-        type: 'asset/inline'
+        type: "asset/inline"
       },
       {
         test: /\.(woff(2)?|eot|ttf|otf)$/,
-        type: 'asset/inline'
+        type: "asset/inline"
       }
     ]
   },
   plugins: [
     new CleanWebpackPlugin(),
-    ...PAGES_TO_CONVERT.map(page => new HtmlWebpackPlugin({
-      template: `${PAGES_PUG}/${page}`,
-      filename: `./${page.replace(/\.pug/, '.html')}`
-    })),
-    new MiniCssExtractPlugin(
-      {
-        filename: `styles/styles.[hash].min.css`
-      }
+    ...PAGES_TO_CONVERT.map(
+      page =>
+        new HtmlWebpackPlugin({
+          template: `${PAGES_PUG}/${page}`,
+          filename: `./${page.replace(/\.pug/, ".html")}`
+        })
     ),
+    new MiniCssExtractPlugin({
+      filename: `styles/styles.[hash].min.css`
+    }),
     new CopyPlugin({
       patterns: [
-        { from: './src/assets/favicon', to: 'assets/favicon', noErrorOnMissing: true },
-        { from: './src/assets/img', to: 'assets/img', noErrorOnMissing: true},
-        { from: './src/assets/fonts', to: 'assets/fonts', noErrorOnMissing: true},
+        {
+          from: "./src/assets/favicon",
+          to: "assets/favicon",
+          noErrorOnMissing: true
+        },
+        { from: "./src/assets/img", to: "assets/img", noErrorOnMissing: true },
+        {
+          from: "./src/assets/fonts",
+          to: "assets/fonts",
+          noErrorOnMissing: true
+        }
       ]
     }),
-    new SVGSpritemapPlugin('./src/assets/icons/icons-colored/**/*.svg', {
+    new SVGSpritemapPlugin("./src/assets/icons/icons-colored/**/*.svg", {
       output: {
-        filename: 'assets/sprites/sprites-colored/sprites.svg',
+        filename: "assets/sprites/sprites-colored/sprites.svg",
         svg4everybody: true,
         svgo: {
           plugins: [
@@ -116,14 +127,12 @@ module.exports = {
     }),
     new SVGSpritemapPlugin(`./src/assets/icons/icons-solid/**/*.svg`, {
       output: {
-        filename: 'assets/sprites/sprites-solid/sprites.svg',
+        filename: "assets/sprites/sprites-solid/sprites.svg",
         svg4everybody: {
           polyfill: true
         },
         svgo: {
-          plugins: [
-            {removeAttrs: {attrs: '(stroke|fill|style)'}}
-          ]
+          plugins: [{ removeAttrs: { attrs: "(stroke|fill|style)" } }]
         }
       },
       sprite: {
@@ -131,6 +140,7 @@ module.exports = {
       }
     }),
     new ImageminPlugin({
-      test: /\.(jpe?g|png|gif)$/i }),
+      test: /\.(jpe?g|png|gif)$/i
+    })
   ]
-}
+};
