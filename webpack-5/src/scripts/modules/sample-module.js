@@ -1,3 +1,5 @@
-export function log() {
-  console.log('modules are bundled nicely!')
+function log() {
+  console.log("modules are bundled nicely!");
 }
+
+export default log;

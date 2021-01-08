@@ -1,5 +1,5 @@
-import { log } from './modules/sample-module';
+import log from "./modules/sample-module";
 
-console.log('scrips are compiled successfully!')
+console.log("scrips are compiled successfully!");
 
 log();
