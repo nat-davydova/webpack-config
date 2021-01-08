@@ -67,6 +67,11 @@ module.exports = {
         exclude: '/node_modules'
       },
       {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: '/node_modules'
+      },
+      {
         test: /.(jpg|jpeg|png|svg)$/,
         type: 'asset/inline'
       },
