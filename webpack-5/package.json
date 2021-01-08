@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
     "dev": "webpack --mode development",
-    "start": "webpack serve --mode development --env development"
+    "start": "webpack serve --mode development --env development && concurrently \"npm run type-check:watch\""
   },
   "author": "Natali Davydova",
   "license": "ISC",

@@ -21,7 +21,7 @@ const PAGES_TO_CONVERT = fs
 
 module.exports = {
   entry: {
-    app: [`${PATHS.src}/scripts/app.ts`, `${PATHS.src}/scss/styles.scss`]
+    app: [`${PATHS.src}/scripts/app.js`, `${PATHS.src}/scss/styles.scss`]
   },
   output: {
     path: `${PATHS.dist}`,
