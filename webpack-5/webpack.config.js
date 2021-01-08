@@ -21,7 +21,7 @@ const PAGES_TO_CONVERT = fs
 
 module.exports = {
   entry: {
-    app: [`${PATHS.src}/scripts/app.js`, `${PATHS.src}/scss/styles.scss`]
+    app: [`${PATHS.src}/scripts/app.ts`, `${PATHS.src}/scss/styles.scss`]
   },
   output: {
     path: `${PATHS.dist}`,
@@ -35,6 +35,9 @@ module.exports = {
     watchContentBase: true,
     port: 8080,
     overlay: true
+  },
+  resolve: {
+    extensions: [".ts", ".js"]
   },
   devtool: "source-map",
   module: {
@@ -71,6 +74,11 @@ module.exports = {
       {
         test: /\.js$/,
         loader: "babel-loader",
+        exclude: "/node_modules"
+      },
+      {
+        test: /\.ts$/,
+        loader: "ts-loader",
         exclude: "/node_modules"
       },
       {
