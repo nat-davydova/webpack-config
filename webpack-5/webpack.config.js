@@ -36,6 +36,18 @@ module.exports = {
     port: 8080,
     overlay: true
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          name: "vendor",
+          test: /node_modules/,
+          chunks: "all",
+          enforce: true
+        }
+      }
+    }
+  },
   resolve: {
     extensions: [".ts", ".js"]
   },
