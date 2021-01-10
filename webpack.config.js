@@ -42,6 +42,7 @@ module.exports = {
   devServer: {
     overlay: true
   },
+  cache: true,
   module: {
     rules: [
       {

@@ -1,5 +1,5 @@
 function log() {
-  console.log("modules are bundled nicely with ts!");
+  console.log("modules are bundled nicely!");
 }
 
 export default log;

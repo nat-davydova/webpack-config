@@ -35,7 +35,8 @@ module.exports = {
     open: true,
     watchContentBase: true,
     port: 8080,
-    overlay: true
+    overlay: true,
+    compress: true
   },
   optimization: {
     minimize: true,
@@ -45,6 +46,7 @@ module.exports = {
         parallel: true
       })
     ],
+    runtimeChunk: true,
     splitChunks: {
       cacheGroups: {
         vendor: {
