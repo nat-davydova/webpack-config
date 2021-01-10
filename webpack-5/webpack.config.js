@@ -2,6 +2,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const TerserJSPlugin = require('terser-webpack-plugin');
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
 const SVGSpritemapPlugin = require("svg-spritemap-webpack-plugin");
 
@@ -37,6 +38,13 @@ module.exports = {
     overlay: true
   },
   optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserJSPlugin({
+        extractComments: true,
+        parallel: true
+      })
+    ],
     splitChunks: {
       cacheGroups: {
         vendor: {
