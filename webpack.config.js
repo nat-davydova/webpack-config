@@ -58,7 +58,7 @@ module.exports = (env, argv) => {
     resolve: {
       extensions: [".ts", ".js"]
     },
-    devtool: "source-map",
+    devtool: isEnvDevelopment ? "eval-cheap-module-source-map" : "source-map",
     module: {
       rules: [
         {
