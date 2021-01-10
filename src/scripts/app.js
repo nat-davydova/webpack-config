@@ -1,5 +1,5 @@
-import { sample } from './modules/sample-module'
+import log from "./modules/sample-module";
 
-console.log('Scripts compiled properly!')
+console.log("scrips are compiled successfully! =)");
 
-sample()
+log();
