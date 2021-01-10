@@ -6,7 +6,8 @@
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
     "dev": "webpack --mode development",
-    "start": "webpack serve --mode development --env development && concurrently \"npm run type-check:watch\""
+    "start": "webpack serve --mode development --env development && concurrently \"npm run type-check:watch\"",
+    "build": "webpack --mode production"
   },
   "author": "Natali Davydova",
   "license": "ISC",
