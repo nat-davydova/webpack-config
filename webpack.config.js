@@ -23,8 +23,6 @@ module.exports = (env, argv) => {
   const isEnvDevelopment = argv.mode === "development";
   const isEnvProduction = argv.mode === "production";
 
-  console.log(isEnvDevelopment, isEnvProduction);
-
   return {
     entry: {
       app: [`${PATHS.src}/scripts/app.js`, `${PATHS.src}/scss/styles.scss`]
@@ -41,7 +39,8 @@ module.exports = (env, argv) => {
       watchContentBase: true,
       port: 8080,
       overlay: true,
-      compress: true
+      compress: true,
+      hot: true
     },
     optimization: {
       splitChunks: {
