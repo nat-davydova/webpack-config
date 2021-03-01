@@ -39,8 +39,7 @@ module.exports = (env, argv) => {
       watchContentBase: true,
       port: 8080,
       overlay: true,
-      compress: true,
-      hot: true
+      compress: true
     },
     optimization: {
       splitChunks: {
